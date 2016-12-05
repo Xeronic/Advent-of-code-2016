@@ -18,20 +18,20 @@ map = [
 ]
 
 def get_char(x, y, map)
-  puts map[x][y]
   return map[x][y]
 end
 
 def get_next_position(direction, current_position, map)
-  cp = current_position
+  cp = current_position.clone
 
   case direction
-  when 'U' then cp.x -= 1 unless get_char(cp.x - 1, cp.y, map) == '.'
-  when 'D' then cp.x += 1 unless get_char(cp.x + 1, cp.y, map) == '.'
-  when 'L' then cp.y -= 1 unless get_char(cp.x, cp.y - 1, map) == '.'
-  when 'R' then cp.y += 1 unless get_char(cp.x, cp.y + 1, map) == '.'
+  when 'U' then cp.x -= 1
+  when 'D' then cp.x += 1
+  when 'L' then cp.y -= 1
+  when 'R' then cp.y += 1
   end
 
+  return current_position if get_char(cp.x, cp.y, map) == '.'
   return cp
 end
 
@@ -39,7 +39,7 @@ directions.each do |direction|
   direction.split('').each do |letter|
     current_position = get_next_position(letter, current_position, map)
   end
-  code << map[current_position.x][current_position.y]
+  code << get_char(current_position.x, current_position.y, map)
 end
 
 puts code.join
