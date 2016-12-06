@@ -2,18 +2,19 @@
 # Advent of code 2016
 # Author Jerry Pedersen (jerry.ck.pedersen@gmail.com)
 ###
+require "crypto/md5"
 
-require 'digest'
 seed = "ugkcyxxp"
-password = ''
+password = ""
 index = 0
 
 start_time = Time.now
 while 1
-  hash = Digest::MD5.hexdigest(seed + index.to_s)
+  hash = Crypto::MD5.hex_digest("#{seed}#{index}")
   if hash[0..4] == "00000"
-    password << hash[5]
-    break if password.length == 8
+    puts hash
+    password += hash[5].to_s
+    break if password.size == 8
   end
   index += 1
 end
